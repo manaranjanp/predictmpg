@@ -1,0 +1,72 @@
+---
+title       : Predicting a Car's Mileage
+subtitle    : How much miles per gallon?
+author      : Manaranjan Pradhan
+job         : Data Enthusiast
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## What does this app do?
+
+1. Predicting car's efficiency
+2. How many miles per gallon the car runs?
+3. This can be predicted from car's Weight, Transmission type and hp
+4. Uses historical data to build a regression model to understand and predict
+
+__A note for car buyer: Know car's efficiency before deciding to buy__
+
+--- .class #id 
+
+## Using historical data to build a model
+
+Using _mtcars_ data and only wt, hp and am columns
+
+```{r}
+
+head( mtcars[ ,c( "mpg", "wt", "hp", "am")] )
+
+```
+
+--- .class #id 
+
+## Exploring relationships 
+
+```{r, echo=FALSE, fig.height= 6,fig.width=14}
+
+library( gridExtra )
+
+wtp <- ggplot( data = mtcars, aes( x = wt, y = mpg, color = am) ) + 
+        geom_point( share = 1) +
+        ggtitle("mpg vs. wt for different transmisstion types")
+
+hpp <- ggplot( data = mtcars, aes( x = hp, y = mpg, color = am) ) + 
+        geom_point( share = 1) +
+        ggtitle("mpg vs. hp for different transmisstion types")
+grid.arrange( wtp, hpp, ncol = 2)
+
+```
+
+From the plots, mpg seems to be negatively correlated with wt and hp. Also, manual transmission have higher mpg compared to automatic transmission types. 
+
+--- .class #id 
+
+## Building the regression model 
+
+```{r}
+fit1 <- lm( mpg ~ wt + hp + am, data = mtcars )
+fit1$coefficients
+```
+
+--- .class #id 
+
+## Using the app to predict miles per gallon
+
+Access the application using the url 
+[http://manaranjanp.shinyapps.io/predictmpg](http://manaranjanp.shinyapps.io/predictmpg)
+
+![width](app.png)
