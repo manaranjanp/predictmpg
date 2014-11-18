@@ -16,7 +16,7 @@ knit        : slidify::knit2slides
 1. Predicting car's efficiency
 2. How many miles per gallon the car runs?
 3. This can be predicted from car's Weight, Transmission type and hp
-4. Uses historical data to build a regression model to understand and predict
+4. Uses historical data to build a regression model to learn and predict
 
 __A note for car buyer: Know car's efficiency before deciding to buy__
 
@@ -59,8 +59,13 @@ From the plots, mpg seems to be negatively correlated with wt and hp. Also, manu
 
 ```{r}
 fit1 <- lm( mpg ~ wt + hp + am, data = mtcars )
-fit1$coefficients
+summary( fit1 )$coefficients
 ```
+__Notes:__
+
+From p-values, it is apparent that all the predictors are significant.
+
+Adjdusted r square value indicates that the equation can explain ```r summary( fit1 )$adj.r.squared * 100 ```% of the total variations in the mpg for different cars.
 
 --- .class #id 
 
